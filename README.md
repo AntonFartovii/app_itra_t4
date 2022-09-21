@@ -1,10 +1,30 @@
 
+* SEQUELIZE Docs  [https://sequelize.org/docs/v6/getting-started/](https://sequelize.org/docs/v6/getting-started/)
+* NEST DOCS [https://docs.nestjs.com/recipes/sql-sequelize](https://docs.nestjs.com/recipes/sql-sequelize)
+
+Needed to install
+* npm install --save sequelize sequelize-typescript mysql2
+* npm install --save pg pg-hstore
+* npm install --save-dev @types/sequelize
+* npm install --save sequelize
+* "@nestjs/sequelize": "^9.0.0",
+* cross env for DEV and PROD
 # Задание
 На платформе своей специализации (JavaScript/TypeScript+React+Node.js+Express+ MySQL или
  .NET/Core+C#+ASP.NET+SQL Server) реализовать Web-приложение, которое позволяет пользователям зарегистрироваться и аутентифицироваться. 
 
 Неаутентифицированные пользователи не имеют доступа к управлению пользователями 
 (могут достучаться только к форме регистрации или форме аутентификации).
+
+* /users/getUsers GET
+* /users/create POST
+* /users/getUser GET
+* /users/update PUT
+* /users/delete DELETE
+* /auth/signup - registration
+* /auth/signin - login
+* /auth/refresh
+*
 
 Аутентифицированные пользователи видят таблицу "пользователи" (идентификатор, 
 именем, мылом, датой регистрации, датой последнего логина, статусом) с пользователями.
