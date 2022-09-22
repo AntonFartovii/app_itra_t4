@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
 import { join } from 'path';
 import { printName } from './hbs/helpers';
-import { resolve } from 'path';
+import * as session from 'express-session';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 5000
@@ -25,6 +25,12 @@ async function bootstrap() {
       helpers: { printName },
     }),
   );
+
+  app.use(session({
+    secret: 'some secret value',
+    resave: false,
+    saveUninitialized: false
+  }))
 
   app.setViewEngine('hbs');
   await app.listen(5000, () => { console.log(`Server running on ${PORT}`)});
