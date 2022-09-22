@@ -3,7 +3,7 @@ import {
   Entity,
   PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
-import { Exclude, Transform } from 'class-transformer';
+// import { Exclude, Transform } from 'class-transformer';
 
 @Entity('user')
 export class UserEntity {
@@ -17,18 +17,18 @@ export class UserEntity {
   login: string
 
   @Column()
-  @Exclude()
+  // @Exclude()
   password: string
 
   @Column()
   version: number
 
   @CreateDateColumn()
-  @Transform(({ value }) => new Date(value).getTime())
+  // @Transform(({ value }) => new Date(value).getTime())
   createdAt: number;
 
   @UpdateDateColumn()
-  @Transform(({ value }) => new Date(value).getTime())
+  // @Transform(({ value }) => new Date(value).getTime())
   updatedAt: number;
 
 }
