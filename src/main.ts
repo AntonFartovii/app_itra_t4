@@ -31,7 +31,14 @@ async function start() {
   app.use(session({
     secret: 'secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
+    name: 'MyCoolWebAppCookieName', // This needs to be unique per-host.
+    cookie: {
+      secure: true, // required for cookies to work on HTTPS
+      httpOnly: false,
+      sameSite: 'none'
+    }
   }))
 
   app.use( varMiddleware )
