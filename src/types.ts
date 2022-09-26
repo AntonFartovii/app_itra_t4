@@ -1,6 +1,6 @@
 import { User } from './users/users.model';
-import { Session } from 'express-session'
-declare module 'express-session' {
+import express from 'express-session'
+declare module 'express' {
   interface Session {
     user: User;
     isAuthenticated: boolean,
