@@ -21,8 +21,6 @@ export class AppController {
 
   @Get('app')
   async app(@Res() res: Response, @Req() req: Request) {
-
-    console.log( req.session );
     const users = await this.userService.getAllUsers()
     return res.render('index', {users});
   }
