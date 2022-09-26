@@ -1,75 +1,11 @@
-
-In project are used:
-* Materialize - front-end framework based on Material Design
-* SEQUELIZE Docs  [https://sequelize.org/docs/v6/getting-started/](https://sequelize.org/docs/v6/getting-started/)
-* NEST DOCS [https://docs.nestjs.com/recipes/sql-sequelize](https://docs.nestjs.com/recipes/sql-sequelize)
-
-Needed to install
-* npm install --save sequelize sequelize-typescript mysql2
-* npm install --save pg pg-hstore
-* npm install --save-dev @types/sequelize
-* npm install --save sequelize
-* "@nestjs/sequelize": "^9.0.0",
-* cross env for DEV and PROD
-# Задание
-На платформе своей специализации (JavaScript/TypeScript+React+Node.js+Express+ MySQL или
- .NET/Core+C#+ASP.NET+SQL Server) реализовать Web-приложение, которое позволяет пользователям зарегистрироваться и аутентифицироваться. 
-
-Неаутентифицированные пользователи не имеют доступа к управлению пользователями 
-(могут достучаться только к форме регистрации или форме аутентификации).
-
-* /users/getUsers GET
-* /users/create POST
-* /users/getUser GET
-* /users/update PUT
-* /users/delete DELETE
-* /auth/signup - registration
-* /auth/signin - login
-* /auth/refresh
-*
-
-Аутентифицированные пользователи видят таблицу "пользователи" (
-* идентификатор, 
-* именем, 
-* мылом, 
-* датой регистрации, 
-* датой последнего логина, 
-* статусом
-) с пользователями.
-
-Таблица левой колонкой содержит чек-боксы для множественного выделения, 
-в заголовке колонки чек-бокс "выделить все/снять выделение". 
-
-Над таблицей тулбар с действиями: Block, Unblock, Delete (два последних можно и лучше иконками). 
-
-Таблица, множественное выделение, тулбар — обязательно. 
-
-Обязательно использование 
-CSS-фреймворка (рекомендация — Bootstrap, но он не обязателен, можно любой другой).
-Пользователь может удалить или заблокировать себя — при этом сразу должен быть разлогинен. 
-Если кто-то другой блокирует или удаляет пользователя, то при любом следующем действии 
-пользователь переправляется на страницу логина.
-
-При регистрации должна быть возможность использовать любой пароль, даже из одного символа.
-Заблокированный пользователь не может войти, удаленный может заново зарегистрироваться.
-
-При отправке задания на p.lebedev@itransition.com указать ФИО (можно без О) и следующие ссылки:
-* Cсылка на Github.
-* Cсылка на задеплоенный проект (без разницы где — Azure, Heroku, что угодно).
-* Записанное видео, в котором отображается с задеплоенного сайта: регистрация, вход, 
-выделение одного пользователя (не себя), его блокировка и демонстрация результата (статус в таблице обновился), 
-разблокировка этого пользователя, выделение всех пользователей через клик на чекбокс в заголовке таблице, 
-блокировка всех (включая себя) нажатием кнопки на тулбаре "Block" 
-(так как себя, то с автомагическим переходом на страницу входа). 
-
-
-
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
+
+
 
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
     <p align="center">

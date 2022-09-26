@@ -1,0 +1,125 @@
+{{title}}
+<div class="container">
+    {{#if isAuth}}
+        <div class="toolbar">
+            <div class="button">
+                <i class="material-icons" id="user_delete" name="delete" data-name="delete">delete</i>
+            </div>
+            <div class="button">
+                <i class="material-icons" id="user_ban" name="ban" data-name="ban">block</i>
+            </div >
+            <div class="button">
+                <i class="material-icons" id="user_unban" name="unban" data-name="unban">check</i>
+            </div>
+        </div>
+
+    <form action="/users/" name="users" id="users">
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>
+                        <label>
+                        <input type="checkbox" class="filled-in select_all_users"/>
+                        <span></span></label>
+                    </th>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Banned</th>
+                    <th>Reg date</th>
+                    <th>Last auth</th>
+                    <th>Role (status)</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each users}}
+                <tr>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="filled-in select_user" id="{{id}}" name="{{id}}"/>
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>{{id}}</td>
+                    <td>{{name}}</td>
+                    <td>{{email}}</td>
+                    <td>{{banned}}</td>
+                    <td>{{createdAt}}</td>
+                    <td>{{authorizeAt}}</td>
+                    <td>{{#each roles}}
+                        {{description}}
+                    {{/each}}</td>
+                    <td></td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </form>
+    {{else}}
+        <blockquote>
+            {{e}}
+        </blockquote>
+        <div class="auth">
+            <div class="row">
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s6"><a class="active" href="#login">Sign in</a></li>
+                        <li class="tab col s6"><a href="#register">Sign up</a></li>
+                    </ul>
+                </div>
+
+                <div id="login" class="col s6 offset-s3">
+                    <h1>Authorization</h1>
+                    <form action="/auth/login" method="POST">
+                        <div class="input-field">
+                            <input id="email" type="email" name="email" class="validate" required>
+                            <label for="email">Email</label>
+                            <span class="helper-text" data-error="Enter your email"></span>
+                        </div>
+                        <div class="input-field">
+                            <input id="password" type="password" name="password" class="validate" required>
+                            <label for="password">Password</label>
+                            <span class="helper-text" data-error="Enter password"></span>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Sign inс</button>
+                    </form>
+                </div>
+
+                <div id="register" class="col s16 offset-s3">
+                    <h1>Registration</h1>
+                    <form action="/auth/registration" method="POST">
+
+                        <div class="input-field">
+                            <input id="remail" type="email" name="email" class="validate" required>
+                            <label for="remail">Email</label>
+                            <span class="helper-text" data-error="Enter your email"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <input id="name" type="text" name="name" required>
+                            <label for="name">Name</label>
+                            <span class="helper-text" data-error="Enter your name"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <input id="rpassword" type="password" name="password" class="validate" required>
+                            <label for="rpassword">Password</label>
+                            <span class="helper-text" data-error="Enter password"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <input id="confirm" type="password" name="confirm" class="validate" required>
+                            <label for="confirm">Password</label>
+                            <span class="helper-text" data-error="Enter password"></span>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Sign up</button>
+                    </form>
+                </div>
+                {{data.token}} {{isAuth}}
+            </div>
+        </div>
+    {{/if}}
+
+</div>
