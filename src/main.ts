@@ -12,7 +12,7 @@ import { varMiddleware } from '../middleware/variables';
 
 
 async function start() {
-  const PORT = process.env.PORT || 80
+  let PORT = parseInt(process.env.PORT) || 80
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
