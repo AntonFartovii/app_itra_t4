@@ -20,7 +20,7 @@ import { AuthController } from './auth/auth.controller';
   providers: [AppService, AuthService],
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env'
+      // envFilePath: '.env'
       // envFilePath: `.${process.env.NODE_ENV}.env`
     }),
     SequelizeModule.forRoot({
