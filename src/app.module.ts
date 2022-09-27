@@ -24,15 +24,14 @@ import { AuthController } from './auth/auth.controller';
       // envFilePath: `.${process.env.NODE_ENV}.env`
     }),
     SequelizeModule.forRoot({
-      database: 'd4cu4kgkh53i54',
+      host: process.env.POSTGRES_HOST,
+      port: Number ( process.env.POSTGRES_PORT ),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
       dialect: 'postgres',
-      host: 'ec2-54-91-223-99.compute-1.amazonaws.com',
-      port: 5432,
-      username: 'ciptvvbeeoexbz',
-      password:'64ff21d2fcf8ece1388ab14cc8e8d9f21f7567679284cfa358d12a9c9276e846',
       autoLoadModels: true,
       models:[User, Role, UserRoles, Post],
-      uri:'jdbc:postgresql://ec2-54-91-223-99.compute-1.amazonaws.com:5432/d4cu4kgkh53i54'
     }),
     UsersModule,
     RolesModule,
