@@ -15,18 +15,21 @@ export class AuthService {
     private jwtService: JwtService) {
   }
 
-async logout ( res: Response ) {
+ async logout ( res: Response ) {
   res.locals.isAuth = false
   res.clearCookie('AuthToken')
   res.render('index', { token: '', isAuth: false });
 }
 
   async login( userDto: CreateUserDto ) {
-    const user: User = await this.validateUser( userDto )
-    user.authorizeAt = new Date()
-    await user.save()
-    const token = await this.generateToken( user )
-    return { user, token }
+    {
+      const user: User = await this.validateUser(userDto);
+      if ( user.banned ) throw new Error('User banned');
+      user.authorizeAt = new Date();
+      await user.save();
+      const token = await this.generateToken(user);
+      return { user, token };
+    }
   }
 
 
