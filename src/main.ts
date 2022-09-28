@@ -4,8 +4,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
 import { join } from 'path';
-import { logger } from '../middleware/variables';
-import session from 'express-session';
 
 async function start() {
   let PORT = process.env.PORT || 80
