@@ -24,11 +24,11 @@ import { AuthController } from './auth/auth.controller';
       // envFilePath: `.${process.env.NODE_ENV}.env`
     }),
     SequelizeModule.forRoot({
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false}
-        },
+      // dialectOptions: {
+      //   ssl: {
+      //     require: true,
+      //     rejectUnauthorized: false}
+      //   },
       host: process.env.POSTGRES_HOST,
       port: Number ( process.env.POSTGRES_PORT ),
       username: process.env.POSTGRES_USER,

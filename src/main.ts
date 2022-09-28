@@ -37,6 +37,7 @@ async function start() {
   const document = SwaggerModule.createDocument( app, config )
   SwaggerModule.setup('/api/doc', app, document )
 
+  app.enable("trust proxy");
   app.use( authMiddleware )
 
   await app.listen(PORT, () => {
