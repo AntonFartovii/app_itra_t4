@@ -4,6 +4,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
 import { join } from 'path';
+import { authMiddleware } from '../middleware/variables';
+import * as cookieParser from 'cookie-parser'
 
 
 
@@ -13,6 +15,8 @@ async function start() {
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
+
+  app.use(cookieParser())
 
   app.engine(
     'hbs',
@@ -35,6 +39,9 @@ async function start() {
 
   const document = SwaggerModule.createDocument( app, config )
   SwaggerModule.setup('/api/doc', app, document )
+
+  app.enable("trust proxy");
+  app.use( authMiddleware )
 
   await app.listen(PORT, () => {
     console.log(`Server running on PORT = ${PORT}`);

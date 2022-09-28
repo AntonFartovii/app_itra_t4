@@ -65,11 +65,16 @@ export class UsersController {
   @UseGuards(RolesGuard)
   @Post('/ban')
   async ban(
-    @Body() dto: any,
-    @Res() res: Response,
-    @Req() req: Request) {
+    @Body() dto: any, @Res() res: Response, @Req() req: Request) {
       try {
-        await this.userService.ban( Object.keys( req.body ))
+        const { id } = req.cookies['user']
+        const ids = Object.keys( req.body )
+        await this.userService.ban( ids )
+
+        if ( ids.includes( id.toString() ) ) {
+          await this.authService.logout(res);
+        }
+
         res.redirect('/')
       } catch (e) {
         res.render('index', {e: 'Error delete'})
@@ -82,9 +87,7 @@ export class UsersController {
   @UseGuards(RolesGuard)
   @Post('/unban')
   async unban(
-    @Body() dto: any,
-    @Res() res: Response,
-    @Req() req: Request) {
+    @Body() dto: any,@Res() res: Response, @Req() req: Request) {
     try {
       await this.userService.unban( Object.keys( req.body ))
       res.redirect('/')
@@ -100,10 +103,14 @@ export class UsersController {
   // @UseGuards(RolesGuard)
   @Post('delete')
   async delete(
-    @Body() dto: any,
-    @Res() res: Response, @Req() req: Request) {
+    @Body() dto: any, @Res() res: Response, @Req() req: Request) {
     try {
+          const { id } = req.cookies['user']
+          const ids = Object.keys( req.body )
           await this.userService.delete(Object.keys( req.body ) )
+          if ( ids.includes( id.toString() ) ) {
+            await this.authService.logout(res);
+          }
           res.redirect('/')
         } catch (e) {
           res.render('index', {e: 'Error delete'})

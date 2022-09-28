@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs'
 import { User } from '../users/users.model';
 import { BanUserDto } from '../roles/dto/ban-user.dto';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -14,14 +15,21 @@ export class AuthService {
     private jwtService: JwtService) {
   }
 
-
+ async logout ( res: Response ) {
+  res.locals.isAuth = false
+  res.clearCookie('AuthToken')
+  res.render('index', { token: '', isAuth: false });
+}
 
   async login( userDto: CreateUserDto ) {
-    const user: User = await this.validateUser( userDto )
-    user.authorizeAt = new Date()
-    await user.save()
-    await this.generateToken( user )
-    return user
+    {
+      const user: User = await this.validateUser(userDto);
+      if ( user.banned ) throw new Error('User banned');
+      user.authorizeAt = new Date();
+      await user.save();
+      const token = await this.generateToken(user);
+      return { user, token };
+    }
   }
 
 
@@ -40,9 +48,7 @@ export class AuthService {
 
   private async generateToken( user: User ) {
     const payload = {email: user.email, id: user.id, roles: user.roles}
-    return {
-      token: this.jwtService.sign( payload )
-    }
+    return this.jwtService.sign( payload )
   }
 
   private async validateUser( userDto: CreateUserDto ) {
