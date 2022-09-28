@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
 import { join } from 'path';
+import { authMiddleware } from '../middleware/variables';
 
 
 
@@ -35,6 +36,8 @@ async function start() {
 
   const document = SwaggerModule.createDocument( app, config )
   SwaggerModule.setup('/api/doc', app, document )
+
+  app.use( authMiddleware )
 
   await app.listen(PORT, () => {
     console.log(`Server running on PORT = ${PORT}`);
