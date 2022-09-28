@@ -1,13 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
-import * as session from 'express-session';
 import { join } from 'path';
-import { varMiddleware } from '../middleware/variables';
 
 
 
@@ -28,20 +24,6 @@ async function start() {
     }),
   );
 
-  app.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: false,
-    proxy: true, // Required for Heroku & Digital Ocean (regarding X-Forwarded-For)
-    name: 'MyCoolWebAppCookieName', // This needs to be unique per-host.
-    cookie: {
-      secure: true, // required for cookies to work on HTTPS
-      httpOnly: false,
-      sameSite: 'none'
-    }
-  }))
-
-  app.use( varMiddleware )
   app.setViewEngine('hbs');
 
   const config = new DocumentBuilder()
@@ -54,10 +36,6 @@ async function start() {
   const document = SwaggerModule.createDocument( app, config )
   SwaggerModule.setup('/api/doc', app, document )
 
-
-
-  // app.useGlobalGuards(JwtAuthGuard)  // глобальное ограничение
-  // app.useGlobalPipes( new ValidationPipe() ) // глобально для каждого эндпоинта
   await app.listen(PORT, () => {
     console.log(`Server running on PORT = ${PORT}`);
   });

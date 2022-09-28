@@ -69,12 +69,8 @@ export class UsersController {
     @Res() res: Response,
     @Req() req: Request) {
       try {
-        const id: string = req.session.user.id.toString()
         await this.userService.ban( Object.keys( req.body ))
-        const user = await this.userService.getUsersById( id )
-        if (user.banned === true) req.session.destroy( () => { })
         res.redirect('/')
-
       } catch (e) {
         res.render('index', {e: 'Error delete'})
       }
@@ -107,12 +103,8 @@ export class UsersController {
     @Body() dto: any,
     @Res() res: Response, @Req() req: Request) {
     try {
-          const id: string = req.session.user.id.toString()
           await this.userService.delete(Object.keys( req.body ) )
-          const user = await this.userService.getUsersById( id )
-          if (!user) req.session.destroy( () => { })
           res.redirect('/')
-
         } catch (e) {
           res.render('index', {e: 'Error delete'})
         }

@@ -15,9 +15,7 @@ export class AuthController {
   // Logout
   @Get('logout')
   logout( @Res() res: Response, @Req() req: Request) {
-    req.session.destroy( () => {
-        res.redirect('/')
-    })
+
   }
 
   @Get('login')
@@ -38,20 +36,10 @@ export class AuthController {
     @Req() req: Request ) {
 
     try {
-      const user = await this.authService.login( userDto )
-      if (user) {
-        req.session.isAuthenticated = true;
-        req.session.user = user
-      }
-
-      req.session.save( err => {
-        if (err) { throw err }
-        res.render('index', {e: 'Вы авторизованы'});
-      } )
+      await this.authService.login( userDto )
+      res.redirect('/')
     } catch (e) {
-      return res.render('index', {e});
-    } finally {
-      return res.redirect('/')
+      res.render('index', {e});
     }
 
   }
