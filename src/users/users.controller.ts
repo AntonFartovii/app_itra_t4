@@ -52,7 +52,7 @@ export class UsersController {
   @ApiOperation({summary:'Выдыча ролей'})
   @ApiResponse({status: 200})
   @Roles("Admin")
-  @UseGuards(RolesGuard)
+  // @UseGuards(RolesGuard)
   @Post('/role')
   addRole(@Body() dto: AddRoleDto) {
     return this.userService.addRole( dto )
@@ -62,7 +62,7 @@ export class UsersController {
   @ApiOperation({summary:'Забанить'})
   @ApiResponse({status: 200})
   // @Roles("Admin")
-  @UseGuards(RolesGuard)
+  // @UseGuards(RolesGuard)
   @Post('/ban')
   async ban(
     @Body() dto: any,
@@ -79,7 +79,7 @@ export class UsersController {
   @ApiOperation({summary:'Unban'})
   @ApiResponse({status: 200})
   // @Roles("Admin")
-  @UseGuards(RolesGuard)
+  // @UseGuards(RolesGuard)
   @Post('/unban')
   async unban(
     @Body() dto: any,

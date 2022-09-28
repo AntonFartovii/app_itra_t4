@@ -20,8 +20,7 @@ export class AuthService {
     const user: User = await this.validateUser( userDto )
     user.authorizeAt = new Date()
     await user.save()
-    await this.generateToken( user )
-    return user
+    return await this.generateToken( user )
   }
 
 
@@ -40,9 +39,7 @@ export class AuthService {
 
   private async generateToken( user: User ) {
     const payload = {email: user.email, id: user.id, roles: user.roles}
-    return {
-      token: this.jwtService.sign( payload )
-    }
+    return this.jwtService.sign( payload )
   }
 
   private async validateUser( userDto: CreateUserDto ) {

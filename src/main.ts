@@ -4,8 +4,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
 import { join } from 'path';
-
-
+import { logger } from '../middleware/variables';
+import session from 'express-session';
 
 async function start() {
   let PORT = process.env.PORT || 80
@@ -27,14 +27,29 @@ async function start() {
   app.setViewEngine('hbs');
 
   const config = new DocumentBuilder()
-    .setTitle(`Урок ULBI`)
+    .setTitle(`my APP`)
     .setDescription(`REST API`)
     .setVersion('1.0.0')
-    .addTag('ULBI')
+    .addTag('fart')
     .build()
 
   const document = SwaggerModule.createDocument( app, config )
   SwaggerModule.setup('/api/doc', app, document )
+
+
+  app.use((req, res, next) => {
+    let cookieToken = {}
+
+    req.headers.cookie.split(' ').forEach( item => {
+      cookieToken = item.split('=')[0] === 'AuthToken'
+        ? {AuthToken: item.split('=')[1]} : {}
+    })
+
+    res.setHeader('Authorization', `Bearer ${cookieToken['AuthToken']}`)
+    res.locals.isAuth = cookieToken['AuthToken'] ? true : false
+
+    next()
+  });
 
   await app.listen(PORT, () => {
     console.log(`Server running on PORT = ${PORT}`);

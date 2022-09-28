@@ -14,6 +14,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [AppController, AuthController],
@@ -24,11 +25,11 @@ import { AuthController } from './auth/auth.controller';
       // envFilePath: `.${process.env.NODE_ENV}.env`
     }),
     SequelizeModule.forRoot({
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false}
-        },
+      // dialectOptions: {
+      //   ssl: {
+      //     require: true,
+      //     rejectUnauthorized: false}
+      //   },
       host: process.env.POSTGRES_HOST,
       port: Number ( process.env.POSTGRES_PORT ),
       username: process.env.POSTGRES_USER,
@@ -42,7 +43,10 @@ import { AuthController } from './auth/auth.controller';
     RolesModule,
     AuthModule,
     PostsModule,
-    FilesModule
+    FilesModule,
+    JwtModule.register({
+
+    })
   ],
 })
 export class AppModule {}

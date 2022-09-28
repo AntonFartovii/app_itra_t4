@@ -1,4 +1,10 @@
-{{title}}
+{{#if token}}
+    <script type="text/javascript" async>
+        const token = '{{token}}';
+        window.sessionStorage.accessToken = token;
+    </script>
+{{/if}}
+
 <div class="container">
     {{#if isAuth}}
         <div class="toolbar">
