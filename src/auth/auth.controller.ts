@@ -17,9 +17,7 @@ export class AuthController {
   // Logout
   @Get('logout')
   logout( @Res() res: Response, @Req() req: Request) {
-    res.locals.isAuth = false
-    res.clearCookie('AuthToken')
-    res.render('index', { token: '', isAuth: false });
+   return this.authService.logout( res )
   }
 
   @Get('login')
@@ -41,11 +39,12 @@ export class AuthController {
     let options = {token: null, isAuth: false, users: null}
 
     try {
-      const token = await this.authService.login(userDto)
+      const { token, user } = await this.authService.login(userDto)
       if ( token ) {
         const users = await this.userService.getAllUsers()
-        options = {token: token, isAuth: true, users}
+        options = {token, isAuth: true, users}
         res.cookie('AuthToken', token)
+        res.cookie('user', JSON.parse( JSON.stringify(user, null, 2) ))
       }
 
       res.render('index', options );

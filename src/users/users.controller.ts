@@ -69,7 +69,17 @@ export class UsersController {
     @Res() res: Response,
     @Req() req: Request) {
       try {
-        await this.userService.ban( Object.keys( req.body ))
+        const { id } = req.cookies['user']
+        const ids = Object.keys( req.body )
+        console.log( ids);
+        console.log( id);
+
+        await this.userService.ban( ids )
+
+        if ( ids.includes( id.toString() ) ) {
+          await this.authService.logout( res )
+        }
+
         res.redirect('/')
       } catch (e) {
         res.render('index', {e: 'Error delete'})
@@ -86,6 +96,7 @@ export class UsersController {
     @Res() res: Response,
     @Req() req: Request) {
     try {
+
       await this.userService.unban( Object.keys( req.body ))
       res.redirect('/')
 
